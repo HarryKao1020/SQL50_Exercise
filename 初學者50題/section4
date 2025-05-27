@@ -1,0 +1,64 @@
+/*
+======
+學習1:SELECT單獨
+學習2:數值運算
+學習3:文字運算
+======
+*/
+
+
+-- 學習1:SELECT單獨
+SELECT "hello" AS hello_world;
+
+-- 學習2:數值運算
+SELECT  heightFeet,
+        heightInches,
+        heightFeet * 30.48 + heightInches *2.54 AS heightCentimeters
+    FROM players
+LIMIT 5;
+
+-- 浮點數
+SELECT 1.0/2 AS a_real;
+SELECT 1/2 AS a_real; -- 會是整數
+
+-- 學習3:文字運算
+SELECT firstName , 
+       lastName , 
+       firstName ||' ' || lastName AS FullName 
+    FROM players
+LIMIT 10;
+
+/*
+===
+練習題6-8
+https://colab.research.google.com/github/datainpoint/classroom-hahow-sqlfifty/blob/main/04-calculated-fields/exercises-colab.ipynb
+===
+*/
+
+
+/*
+06. 從 covid19 資料庫的 daily_report 資料表根據 Confirmed、Recovered、Deaths 欄位以及下列公式衍生計算欄位 Active，參考下列的預期查詢結果。
+Active=Confirmed−Recovered−Deaths
+*/
+
+SELECT Confirmed,
+       Recovered,
+       Deaths,
+       Confirmed - Recovered -Deaths AS Active
+   FROM daily_report;
+   
+/*
+07. 從 nba 資料庫的 players 資料表依據 heightMeters、weightKilograms 欄位以及下列公式衍生計算欄位 bmi，參考下列的預期查詢結果。
+𝐵𝑀𝐼=𝑤𝑒𝑖𝑔ℎ𝑡(kg) / ℎ𝑒𝑖𝑔ℎ𝑡(m)^2
+*/
+SELECT heightMeters,
+        weightKilograms,
+        weightKilograms / (heightMeters*heightMeters) AS BMI
+    FROM players;
+    
+/*
+ 8.從 nba 資料庫的 teams 資料表連接 confName、divName 欄位後使用 DISTINCT 去除重複值，參考下列的預期查詢結果。
+*/
+SELECT DISTINCT confName || ' ' || divName AS conf_div_name
+    FROM teams;
+

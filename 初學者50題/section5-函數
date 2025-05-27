@@ -1,0 +1,90 @@
+/*
+函數分兩大類
+1. 通用函數(Universal functions)
+作用維度: 水平方向
+特徵:每個觀測值對應一個輸出
+用於:
+- 轉換資料類型
+- 計算數值
+- 操作文字
+- 操作日期時間
+
+2. 聚合函數(Aggregate functions)
+作用維度:垂直
+特徵:整欄變數對應一個輸出值, ex:AVG(heightMeters) AS avg_height , 就是把全部heightMeters做平均計算產出一個值
+用於:
+- 整欄的計算
+*/
+
+/*
+========
+通用函數:
+========
+*/
+
+-- CAST函數 : 將查詢結果的資料類型轉成指定的資料類型 
+-- CAST (data AS data_type)
+SELECT CAST(points AS REAL) / gamesPlayed AS points_per_game
+    FROM career_summaries
+LIMIT 5;
+
+-- COALESCE : 將空值(或遺漏值) 轉換為指定常數
+-- COALESCE(NULL, replacement)
+SELECT COALESCE(Province_State,'No Province or State Data') AS coalesced_province_state, 
+        COALESCE(Admin2,'No Country Data') AS coalesced_admin2
+    FROM lookup_table
+LIMIT 5;
+
+-- ROUND:調整查詢結果的小數點位數
+-- ROUND(column , 取位數)
+SELECT ROUND(CAST(points AS REAL) / gamesPlayed,2) AS points_per_game
+    FROM career_summaries
+LIMIT 5;
+
+/*
+=========
+通用函式:操作文字
+=========
+*/
+-- LENGTH : 計算文字中有幾個字元,包含空格,標點符號
+SELECT LENGTH(firstName) AS first_name_len,
+        LENGTH(lastName) AS last_name_len
+    FROM players;
+
+    
+-- SUBSTR(TEXT,start_index , last_index)
+SELECT SUBSTR(city, 1,3) AS tricode
+    FROM teams
+LIMIT 3;
+
+-- UPPER and LOWER : 轉換大小寫
+SELECT UPPER(city) AS upper_city,
+        LOWER(city) AS lower_city
+    FROM teams
+LIMIT 5;
+
+/*
+=======
+日期的通用函數:
+- 以ISO8601格式為標準
+- 日期以 YYYY-MM-DD
+- 時間 HH:mm:SS
+- 日期時間YYYY-MM-DD HH:mm:SS
+=======
+*/
+
+-- STRFTIME:調整日期,時間,日期時間顯示格式
+-- STRFTIME(format , DATE/TIME/DATETIME)
+/*
+%d:二位數的日(01-31)
+%j:一年中的第幾天(001-366)
+&m:二位數的月(1-12)
+%w:一星期中的第幾天(0-6)
+%W:一年中的第幾週(00-53)
+%Y:四位數的年(0000-9999)
+*/
+SELECT Last_Update,
+        STRFTIME('%d', Last_Update) AS day_part,
+        STRFTIME('%Y', Last_Update) AS year_part
+    FROM daily_report
+LIMIT 3;

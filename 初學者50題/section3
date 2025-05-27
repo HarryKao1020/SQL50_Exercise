@@ -1,0 +1,29 @@
+-- AS:替某欄位改別名
+SELECT title AS movie_title FROM movies;
+
+-- DISTINCT : 省略查詢中重複的資料
+SELECT DISTINCT confName FROM teams;
+
+/*
+====== 
+練習題1~5
+======
+*/
+
+-- Q1
+SELECT * FROM admin_regions LIMIT 5;
+
+-- Q2
+SELECT confName,divName,fullName FROM teams LIMIT 10;
+
+-- Q3
+SELECT firstName AS first_name,
+        lastName AS last_name 
+    FROM players
+    LIMIT 5;
+    
+-- Q4
+SELECT DISTINCT county FROM admin_regions;
+
+-- Q5
+SELECT DISTINCT divName FROM teams;
